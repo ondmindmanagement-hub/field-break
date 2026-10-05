@@ -1,0 +1,22 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Field Break</title>
+<style>
+:root{font-family:Inter,system-ui,-apple-system,sans-serif;background:#f3f5f0;color:#182018}*{box-sizing:border-box}body{margin:0}.wrap{max-width:820px;margin:auto;padding:64px 22px}
+.eyebrow{letter-spacing:.14em;text-transform:uppercase;font-size:12px;color:#667060}h1{font-size:58px;letter-spacing:-.05em;margin:8px 0 10px}.sub{font-size:19px;color:#566050;max-width:650px;line-height:1.5}
+.card{background:#fff;border:1px solid #d9ded4;border-radius:22px;padding:24px;margin:24px 0;box-shadow:0 10px 30px rgba(0,0,0,.035)}label{display:block;font-weight:700;margin:14px 0 7px}
+input,select{width:100%;border:1px solid #c9cec4;border-radius:12px;padding:12px;font:inherit;background:#fff}button{margin-top:18px;border:0;border-radius:999px;padding:13px 20px;background:#182018;color:white;font-weight:750;cursor:pointer}
+.plan li{margin:9px 0;line-height:1.45}.screen{padding:14px;border-radius:14px;background:#eef2ea;font-weight:650}.tiny{font-size:12px;color:#73806e}
+</style></head><body><main class="wrap">
+<div class="eyebrow">Hacktoberfest Week 1 · Touch Grass</div><h1>Field Break</h1>
+<div class="sub">Tell an open model how much time and energy you have. Get one tiny outdoor plan, then close the screen.</div>
+<section class="card">
+<label>Minutes available</label><input id="minutes" type="number" min="10" max="180" value="20">
+<label>Energy</label><select id="energy"><option>low</option><option selected>medium</option><option>high</option></select>
+<label>Outdoor setting available</label><input id="place" value="neighbourhood streets and a small park">
+<label>Constraint</label><input id="constraint" placeholder="e.g. no car, stay close to home">
+<button id="go">Give me one thing to do outside</button>
+<p class="tiny">With OPEN_MODEL_API_KEY this calls Apertus 1.5. Without it, the app shows a clearly labelled deterministic demo policy.</p>
+</section>
+<section class="card" id="result" hidden><h2 id="title"></h2><div id="meta" class="tiny"></div><ol class="plan" id="plan"></ol><p><b>Bring:</b> <span id="bring"></span></p><div class="screen" id="exit"></div></section>
+</main><script>
+const q=id=>document.getElementById(id);q("go").onclick=async()=>{const b=q("go");b.disabled=true;b.textContent="Planning…";try{const r=await fetch("/api/plan",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({minutes:+q("minutes").value,energy:q("energy").value,place:q("place").value,constraint:q("constraint").value})});if(!r.ok)throw new Error(await r.text());const d=await r.json();q("result").hidden=false;q("title").textContent=d.title;q("meta").textContent=d.minutes+" minutes · "+d.model;q("plan").innerHTML=d.plan.map(x=>"<li>"+x+"</li>").join("");q("bring").textContent=d.bring.join(", ")||"nothing special";q("exit").textContent=d.screen_exit}catch(e){alert(e.message)}finally{b.disabled=false;b.textContent="Give me one thing to do outside"}};
+</script></body></html>
