@@ -1,0 +1,17 @@
+{
+  "date": "2026-10-06",
+  "interface": "Public AI public chat",
+  "model": "Apertus 1.5 70B",
+  "infrastructure": "Swiss National Supercomputing Centre (CSCS), Lugano, Switzerland",
+  "prompt": "You are Field Break, an outdoor micro-adventure planner. I have 20 minutes, medium energy, access to neighbourhood streets and a small park, and I want to stay close to home. Return ONLY one-line JSON with keys title, minutes, plan (3 short steps), bring (array), screen_exit. Do not invent weather, closures, trail conditions, or medical claims. Prefer something I can start within five minutes.",
+  "result": {
+    "title": "Neighbourhood Pocket Adventure",
+    "minutes": 20,
+    "plan": [
+      "Walk park perimeter for 5 mins, sketch 3 interesting textures on paper, sit bench to observe 10 mins of sky and wildlife"
+    ],
+    "bring": ["paper/notebook", "pencil", "water bottle"],
+    "screen_exit": "Turn off phone and let adventure unfold offline"
+  },
+  "note": "Captured from the public Apertus 1.5 70B chat during Hacktoberfest Week 1."
+}
